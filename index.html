@@ -11,6 +11,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MotoLog">
     
+    <!-- Ícone PWA e Favicon Embutido (SVG com Tachômetro Esportivo) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%230f172a'/><path d='M120 370 A180 180 0 1 1 392 370' fill='none' stroke='%231e293b' stroke-width='32' stroke-linecap='round'/><path d='M120 370 A180 180 0 1 1 350 180' fill='none' stroke='%2306b6d4' stroke-width='32' stroke-linecap='round'/><polygon points='256,256 340,150 270,256' fill='%2306b6d4'/><circle cx='256' cy='256' r='28' fill='%2338bdf8'/><circle cx='256' cy='256' r='14' fill='%230f172a'/><path d='M200 400 L256 360 L312 400' fill='none' stroke='%2338bdf8' stroke-width='20' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    
+    <!-- Manifest do PWA com o Novo Ícone Incorporado -->
+    <link rel="manifest" href="data:application/json;choice=pwa,{"name":"MotoLog & Corridas","short_name":"MotoLog","start_url":".","display":"standalone","background_color":"#0f172a","theme_color":"#0f172a","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%230f172a'/><path d='M120 370 A180 180 0 1 1 392 370' fill='none' stroke='%231e293b' stroke-width='32' stroke-linecap='round'/><path d='M120 370 A180 180 0 1 1 350 180' fill='none' stroke='%2306b6d4' stroke-width='32' stroke-linecap='round'/><polygon points='256,256 340,150 270,256' fill='%2306b6d4'/><circle cx='256' cy='256' r='28' fill='%2338bdf8'/><circle cx='256' cy='256' r='14' fill='%230f172a'/><path d='M200 400 L256 360 L312 400' fill='none' stroke='%2338bdf8' stroke-width='20' stroke-linecap='round' stroke-linejoin='round'/></svg>","sizes":"512x512","type":"image/svg+xml"}]}">
+
     <style>
         /* ==========================================================================
            1. RESET & BASE STYLES
@@ -424,7 +430,6 @@
         .bg-amber { background-color: var(--accent-amber); }
         .bg-red { background-color: var(--accent-red); }
 
-        /* Tabelas Responsivas para Corridas */
         .table-container { overflow-x: auto; margin-top: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
         th { background: var(--bg-main); padding: 10px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--border-color); }
@@ -921,7 +926,6 @@
 
         let currentKm = parseInt(localStorage.getItem('moto_km')) || 25850;
         let services = JSON.parse(localStorage.getItem('moto_logs')) || [];
-        // Removidos registros prévios do histórico de corridas e ganhos
         let shifts = JSON.parse(localStorage.getItem('moto_shifts')) || [];
 
         document.getElementById('shiftDate').valueAsDate = new Date();
@@ -983,19 +987,16 @@
             localStorage.setItem('moto_logs', JSON.stringify(services));
         }
 
-        // Função para atualizar dinamicamente as opções do filtro de meses
         function updateMonthFilterOptions(selectedKey) {
             const select = document.getElementById('filterMonthSelect');
             const monthsSet = new Set();
 
-            // Adiciona meses dos registros salvos
             shifts.forEach(s => {
                 if (s.date && s.date.length >= 7) {
                     monthsSet.add(s.date.substring(0, 7));
                 }
             });
 
-            // Adiciona mês atual e os 12 meses futuros para planejamento
             const now = new Date();
             for (let i = 0; i <= 12; i++) {
                 const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
@@ -1004,7 +1005,6 @@
                 monthsSet.add(`${year}-${month}`);
             }
 
-            // Ordena os meses em ordem decrescente (mais recente primeiro)
             const sortedMonths = Array.from(monthsSet).sort().reverse();
 
             const monthNames = [
@@ -1030,7 +1030,6 @@
             const select = document.getElementById('filterMonthSelect');
             let selectedMonth = select.value;
 
-            // Se ainda não existirem opções no filtro, inicializa as opções com o mês atual
             if (!select.options.length) {
                 const now = new Date();
                 selectedMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -1138,7 +1137,6 @@
             closeShiftModal();
             renderMotoDashboard();
             
-            // Garante que o filtro exiba o mês do lançamento recém-salvo
             const newShiftMonth = newShift.date.substring(0, 7);
             updateMonthFilterOptions(newShiftMonth);
             renderEarningsDashboard();
