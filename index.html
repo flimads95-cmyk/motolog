@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MotoLog - Cronograma & Controle de Manutenção</title>
+    
+    <!-- PWA & Mobile Settings -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MotoLog">
+    
     <style>
         /* ==========================================================================
            1. RESET & BASE STYLES
@@ -46,7 +53,7 @@
             font-family: var(--font-family);
             line-height: 1.5;
             min-height: 100vh;
-            padding-bottom: 70px;
+            padding-bottom: 80px;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -151,12 +158,24 @@
             background-color: transparent;
         }
 
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .btn-danger:hover {
+            background-color: var(--accent-red);
+            color: #fff;
+        }
+
         .btn-icon {
             padding: 8px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             background-color: var(--bg-card);
             color: var(--text-secondary);
+            cursor: pointer;
         }
 
         .btn-icon:hover {
@@ -282,7 +301,7 @@
         }
 
         .card-value {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #fff;
         }
@@ -296,7 +315,6 @@
             gap: 4px;
         }
 
-        /* Action Banner */
         .banner {
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(30, 41, 59, 1));
             border: 1px solid rgba(6, 182, 212, 0.3);
@@ -325,7 +343,6 @@
             color: var(--text-secondary);
         }
 
-        /* Section Headers */
         .section-header {
             display: flex;
             align-items: center;
@@ -341,7 +358,6 @@
             gap: 8px;
         }
 
-        /* Component Health Grid */
         .components-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -349,17 +365,8 @@
             margin-bottom: 24px;
         }
 
-        @media (min-width: 640px) {
-            .components-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .components-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+        @media (min-width: 640px) { .components-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .components-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .component-card {
             background-color: var(--bg-card);
@@ -395,42 +402,8 @@
             color: var(--accent-cyan);
         }
 
-        .component-meta h4 {
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .component-meta p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .badge {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-        }
-
-        .badge-green {
-            background-color: rgba(16, 185, 129, 0.15);
-            color: var(--accent-green);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        .badge-amber {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: var(--accent-amber);
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-red {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: var(--accent-red);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
+        .component-meta h4 { font-size: 0.9rem; font-weight: 700; }
+        .component-meta p { font-size: 0.75rem; color: var(--text-secondary); }
 
         .progress-bar-bg {
             width: 100%;
@@ -451,44 +424,11 @@
         .bg-amber { background-color: var(--accent-amber); }
         .bg-red { background-color: var(--accent-red); }
 
-        .component-footer {
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Urgent Alert Box */
-        .alerts-box {
-            background-color: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: var(--radius-md);
-            padding: 14px;
-            margin-bottom: 20px;
-        }
-
-        .alerts-box h4 {
-            color: var(--accent-amber);
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .alerts-list {
-            list-style: none;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        /* Tabelas Responsivas para Corridas */
+        .table-container { overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+        th { background: var(--bg-main); padding: 10px; color: var(--text-secondary); font-weight: 600; border-bottom: 1px solid var(--border-color); }
+        td { padding: 10px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap; }
 
         /* ==========================================================================
            6. HISTORY & LIST VIEWS
@@ -510,10 +450,7 @@
                 align-items: center;
                 justify-content: space-between;
             }
-            .controls-filters {
-                display: flex;
-                gap: 8px;
-            }
+            .controls-filters { display: flex; gap: 8px; }
         }
 
         .history-list {
@@ -531,9 +468,7 @@
             gap: 12px;
         }
 
-        .history-item:last-child {
-            border-bottom: none;
-        }
+        .history-item:last-child { border-bottom: none; }
 
         @media (min-width: 640px) {
             .history-item {
@@ -543,71 +478,12 @@
             }
         }
 
-        .history-main {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .history-info h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .history-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .history-notes {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-style: italic;
-            background-color: var(--bg-main);
-            padding: 6px 10px;
-            border-radius: var(--radius-sm);
-            margin-top: 6px;
-        }
-
-        .history-right {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-
-        .history-cost {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--accent-green);
-        }
-
-        .empty-state {
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .empty-state svg {
-            width: 48px;
-            height: 48px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
         /* ==========================================================================
            7. MODALS & OVERLAYS
            ========================================================================== */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(4px);
             z-index: 50;
@@ -620,10 +496,7 @@
             transition: opacity 0.2s ease;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .modal-container {
             background-color: var(--bg-card);
@@ -637,9 +510,7 @@
             transition: transform 0.2s ease;
         }
 
-        .modal-overlay.active .modal-container {
-            transform: translateY(0);
-        }
+        .modal-overlay.active .modal-container { transform: translateY(0); }
 
         .modal-header {
             padding: 16px;
@@ -651,40 +522,21 @@
         }
 
         .modal-header h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px;
         }
 
         .modal-body {
             padding: 20px;
             display: flex;
-            flex-direction: flex-col;
+            flex-direction: column;
             gap: 14px;
-            max-height: 80vh;
+            max-height: 75vh;
             overflow-y: auto;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         .modal-footer {
             padding: 12px 20px;
@@ -700,9 +552,7 @@
            ========================================================================== */
         .mobile-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background-color: rgba(15, 23, 42, 0.98);
             border-top: 1px solid var(--border-color);
             display: flex;
@@ -712,72 +562,16 @@
             z-index: 40;
         }
 
-        @media (min-width: 768px) {
-            .mobile-nav {
-                display: none;
-            }
-        }
+        @media (min-width: 768px) { .mobile-nav { display: none; } }
 
         .mobile-tab {
-            background: none;
-            border: none;
+            background: none; border: none;
             color: var(--text-muted);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 2px; font-size: 0.65rem; font-weight: 600; cursor: pointer;
         }
 
-        .mobile-tab.active {
-            color: var(--accent-cyan);
-        }
-
-        .mobile-tab-add {
-            transform: translateY(-16px);
-        }
-
-        .mobile-tab-add-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background-color: var(--accent-cyan);
-            color: #0f172a;
-            border: 4px solid var(--bg-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4);
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 70px;
-            right: 16px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 10px 16px;
-            border-radius: var(--radius-md);
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
-            z-index: 60;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .mobile-tab.active { color: var(--accent-cyan); }
 
         .hidden { display: none !important; }
     </style>
@@ -789,7 +583,7 @@
         <div class="header-container">
             <div class="logo-group">
                 <div class="logo-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                 </div>
                 <div class="logo-text">
                     <h1>Moto<span>Log</span></h1>
@@ -799,11 +593,8 @@
 
             <div class="header-actions">
                 <button onclick="openOdometerModal()" class="btn btn-outline" style="padding: 6px 10px;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-cyan)"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
-                    <span id="headerKmDisplay" style="font-weight:700;">0 km</span>
-                </button>
-                <button onclick="openSettingsModal()" class="btn-icon" title="Configurações">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-cyan)"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                    <span id="headerKmDisplay" style="font-weight:700;">25.850 km</span>
                 </button>
             </div>
         </div>
@@ -818,792 +609,608 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
                 Painel Resumo
             </button>
+            <button onclick="switchTab('earnings')" id="dt-tab-earnings" class="nav-tab">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Corridas & Ganhos
+            </button>
             <button onclick="switchTab('history')" id="dt-tab-history" class="nav-tab">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
-                Histórico de Serviços
-            </button>
-            <button onclick="switchTab('schedule')" id="dt-tab-schedule" class="nav-tab">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
-                Plano de Revisões
+                Histórico Peças
             </button>
         </nav>
 
-        <!-- ================= TAB 1: DASHBOARD ================= -->
+        <!-- ================= TAB 1: DASHBOARD MANUTENÇÃO ================= -->
         <section id="tab-dashboard" class="tab-content active">
-            
-            <!-- Metric Cards Bar -->
             <div class="metrics-grid">
                 <div class="card">
-                    <div class="card-title">Hodômetro Atual</div>
-                    <div class="card-value" id="dashOdometer">0 km</div>
-                    <div class="card-subtext">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        KM registrado na moto
-                    </div>
+                    <div class="card-title">Hodômetro Moto</div>
+                    <div class="card-value" id="dashOdometer">25.850 km</div>
+                    <div class="card-subtext">KM registrado na moto</div>
                 </div>
-
                 <div class="card">
-                    <div class="card-title">Total Investido</div>
+                    <div class="card-title">Gasto Manutenção</div>
                     <div class="card-value" style="color:var(--accent-green)" id="dashTotalSpent">R$ 0,00</div>
                     <div class="card-subtext" id="dashServiceCount">0 Registros</div>
                 </div>
-
                 <div class="card">
                     <div class="card-title">Alertas Pendentes</div>
                     <div class="card-value" style="color:var(--accent-amber)" id="dashAlertsCount">0</div>
                     <div class="card-subtext" style="color:var(--accent-amber)">Requerem atenção</div>
                 </div>
-
                 <div class="card">
-                    <div class="card-title">Média Mensal</div>
+                    <div class="card-title">Média Mensal Peças</div>
                     <div class="card-value" style="color:var(--accent-cyan)" id="dashAvgCost">R$ 0,00</div>
                     <div class="card-subtext">Com base no histórico</div>
                 </div>
             </div>
 
-            <!-- Call to Action Banner -->
             <div class="banner">
                 <div class="banner-info">
                     <div style="background-color:rgba(6,182,212,0.2); color:var(--accent-cyan); padding:8px; border-radius:10px;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                     </div>
                     <div>
-                        <h2>Realizou manutenção na Factor 150?</h2>
-                        <p>Registre trocas de óleo, peças e revisões.</p>
+                        <h2>Trocou peças da Factor 150?</h2>
+                        <p>Registre trocas de óleo, pneus ou peças.</p>
                     </div>
                 </div>
-                <button onclick="openServiceModal()" class="btn btn-primary">
-                    + Novo Serviço
-                </button>
+                <button onclick="openServiceModal()" class="btn btn-primary">+ Novo Serviço</button>
             </div>
 
-            <!-- Urgent Alerts Box -->
-            <div id="urgentAlertsBox" class="alerts-box hidden">
-                <h4>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-                    Atenção: Itens que precisam de manutenção
-                </h4>
-                <ul id="urgentAlertsList" class="alerts-list"></ul>
-            </div>
-
-            <!-- Maintenance Component Health Grid -->
             <div class="section-header">
-                <h3 class="section-title">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-cyan)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    Saúde das Peças (Vida Útil)
-                </h3>
+                <h3 class="section-title">Saúde das Peças (Vida Útil)</h3>
             </div>
-
-            <div id="componentsGrid" class="components-grid">
-                <!-- Dynamically Rendered via JS -->
-            </div>
-
-            <!-- Recent History Section -->
-            <div class="section-header" style="margin-top:24px;">
-                <h3 class="section-title">Últimos Serviços Realizados</h3>
-                <button onclick="switchTab('history')" class="btn btn-outline" style="font-size:0.75rem; padding:4px 10px;">Ver todos</button>
-            </div>
-            <div id="dashRecentHistory" class="history-list"></div>
-
+            <div id="componentsGrid" class="components-grid"></div>
         </section>
 
-        <!-- ================= TAB 2: HISTORY ================= -->
+        <!-- ================= TAB 2: CORRIDAS & GANHOS ================= -->
+        <section id="tab-earnings" class="tab-content">
+            <!-- Filtro Dinâmico de Mês -->
+            <div class="card" style="margin-bottom: 16px; padding: 12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.9rem;">Mês de Trabalho:</span>
+                <select id="filterMonthSelect" style="width: auto; padding:6px 12px;" onchange="renderEarningsDashboard()">
+                    <!-- Opções geradas dinamicamente via JS -->
+                </select>
+            </div>
+
+            <!-- Métricas do Mês de Corridas -->
+            <div class="metrics-grid">
+                <div class="card">
+                    <div class="card-title">Faturamento Bruto</div>
+                    <div class="card-value" style="color:var(--accent-green)" id="earnGrossVal">R$ 0,00</div>
+                    <div class="card-subtext">Ganhos nos Apps</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Saldo Líquido</div>
+                    <div class="card-value" style="color:var(--accent-cyan)" id="earnNetVal">R$ 0,00</div>
+                    <div class="card-subtext">Após combustível e taxas</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">R$ / Hora</div>
+                    <div class="card-value" id="earnPerHourVal">R$ 0,00</div>
+                    <div class="card-subtext">Média por hora rodada</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">R$ / KM Rodado</div>
+                    <div class="card-value" id="earnPerKmVal">R$ 0,00</div>
+                    <div class="card-subtext">Rendimento por KM</div>
+                </div>
+            </div>
+
+            <!-- Resumo Operacional de Corridas -->
+            <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card">
+                    <div class="card-title">KM Rodados</div>
+                    <div class="card-value" id="earnKmTotal">0 km</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Horas Trabalhadas</div>
+                    <div class="card-value" id="earnHoursTotal">0h 00m</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Combustível Est.</div>
+                    <div class="card-value" style="color:var(--accent-red)" id="earnFuelTotal">-R$ 0,00</div>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top:16px;">
+                <h3 class="section-title">Jornadas do Mês</h3>
+                <button onclick="openShiftModal()" class="btn btn-primary">+ Registrar Dia</button>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Horário</th>
+                                <th>KM Total</th>
+                                <th>Bruto (R$)</th>
+                                <th>Gasolina</th>
+                                <th>Reservas</th>
+                                <th>Líquido</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shiftsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: HISTÓRICO PEÇAS ================= -->
         <section id="tab-history" class="tab-content">
-            
             <div class="controls-bar">
                 <div style="flex:1;">
-                    <input type="text" id="historySearchInput" oninput="renderHistoryTable()" placeholder="Buscar por peça, marca, observação...">
+                    <input type="text" id="historySearchInput" oninput="renderHistoryTable()" placeholder="Buscar por peça ou observação...">
                 </div>
-                <div class="controls-filters">
-                    <select id="historyCategoryFilter" onchange="renderHistoryTable()" style="max-width: 160px;">
-                        <option value="ALL">Todas Categorias</option>
-                        <option value="Óleo do Motor">Óleo do Motor</option>
-                        <option value="Filtro de Ar">Filtro de Ar</option>
-                        <option value="Vela de Ignição">Vela de Ignição</option>
-                        <option value="Kit Relação">Kit Relação</option>
-                        <option value="Pneus">Pneus</option>
-                        <option value="Freios">Freios</option>
-                        <option value="Fluido de Freio">Fluido de Freio</option>
-                        <option value="Revisão Geral">Revisão Geral</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                    <button onclick="openServiceModal()" class="btn btn-primary">+ Adicionar</button>
-                </div>
+                <button onclick="openServiceModal()" class="btn btn-primary">+ Adicionar</button>
             </div>
-
             <div id="historyListContainer" class="history-list"></div>
-            
-            <div id="historyEmptyState" class="empty-state hidden">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                <p style="font-weight:700; color:var(--text-primary);">Nenhum serviço registrado</p>
-                <p style="font-size:0.8rem; margin-top:4px;">Clique em "+ Adicionar" para cadastrar a manutenção da sua moto.</p>
-            </div>
-
-        </section>
-
-        <!-- ================= TAB 3: REVISION SCHEDULE ================= -->
-        <section id="tab-schedule" class="tab-content">
-            
-            <div class="card" style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                <div>
-                    <h3 style="font-size:1rem; font-weight:700;">Intervalos Recomendados</h3>
-                    <p style="font-size:0.8rem; color:var(--text-secondary);">Ajuste a quilometragem recomendada para troca de cada item da sua Factor 150.</p>
-                </div>
-                <button onclick="resetCategoryIntervals()" class="btn btn-outline" style="font-size:0.75rem;">Restaurar Padrão Yamaha</button>
-            </div>
-
-            <div id="scheduleGrid" class="components-grid"></div>
-
         </section>
 
     </main>
 
-    <!-- Mobile Navigation Bar -->
+    <!-- NAVEGAÇÃO MOBILE INFERIOR -->
     <nav class="mobile-nav">
         <button onclick="switchTab('dashboard')" id="mb-tab-dashboard" class="mobile-tab active">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-            <span>Início</span>
+            <span>Moto</span>
         </button>
-        
-        <div class="mobile-tab-add">
-            <button onclick="openServiceModal()" class="mobile-tab-add-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            </button>
-        </div>
-
+        <button onclick="switchTab('earnings')" id="mb-tab-earnings" class="mobile-tab">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Corridas</span>
+        </button>
+        <button onclick="openShiftModal()" class="mobile-tab" style="color:var(--accent-cyan);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <span>+Jornada</span>
+        </button>
         <button onclick="switchTab('history')" id="mb-tab-history" class="mobile-tab">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
-            <span>Histórico</span>
-        </button>
-
-        <button onclick="switchTab('schedule')" id="mb-tab-schedule" class="mobile-tab">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
-            <span>Revisões</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/></svg>
+            <span>Peças</span>
         </button>
     </nav>
 
-    <!-- Modal 1: Service Entry Form -->
+    <!-- MODAL 1: REGISTRAR JORNADA DE TRABALHO -->
+    <div id="shiftModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Registrar Dia de Trabalho (Uber/99)</h3>
+                <button onclick="closeShiftModal()" class="btn-icon">x</button>
+            </div>
+            <form id="shiftForm" onsubmit="saveShift(event)">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="shiftDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bruto Apps (R$)</label>
+                            <input type="number" step="0.01" id="shiftGross" required placeholder="140.76">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hora Início</label>
+                            <input type="time" id="shiftStart" required value="07:00">
+                        </div>
+                        <div class="form-group">
+                            <label>Hora Fim</label>
+                            <input type="time" id="shiftEnd" required value="12:30">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>KM Inicial</label>
+                            <input type="number" id="shiftKmInit" required placeholder="25680">
+                        </div>
+                        <div class="form-group">
+                            <label>KM Final (Atualiza Moto)</label>
+                            <input type="number" id="shiftKmFinal" required placeholder="25850">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preço Gasolina (R$/L)</label>
+                            <input type="number" step="0.01" id="shiftGasPrice" required value="5.19">
+                        </div>
+                        <div class="form-group">
+                            <label>Manutenção Dia (R$)</label>
+                            <input type="number" step="0.01" id="shiftMaint" value="0.00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Férias / 13º (R$)</label>
+                            <input type="number" step="0.01" id="shiftVacation" value="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Investimento (R$)</label>
+                            <input type="number" step="0.01" id="shiftInvest" value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="closeShiftModal()" class="btn btn-outline">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Dia</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REGISTRAR SERVIÇO / MANUTENÇÃO -->
     <div id="serviceModal" class="modal-overlay">
         <div class="modal-container">
             <div class="modal-header">
-                <h3 id="serviceModalTitle">Registrar Serviço</h3>
-                <button onclick="closeServiceModal()" class="btn-icon" style="padding:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                <h3>Registrar Manutenção</h3>
+                <button onclick="closeServiceModal()" class="btn-icon">x</button>
             </div>
             <form id="serviceForm" onsubmit="saveService(event)">
                 <div class="modal-body">
-                    <input type="hidden" id="serviceId">
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Data *</label>
-                            <input type="date" id="serviceDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Quilometragem (km) *</label>
-                            <input type="number" id="serviceKm" min="0" required placeholder="Ex: 11200">
-                        </div>
-                    </div>
-
                     <div class="form-group">
-                        <label>Categoria do Serviço *</label>
-                        <select id="serviceCategory" required>
-                            <option value="Óleo do Motor">Óleo do Motor</option>
+                        <label>Peça / Categoria</label>
+                        <select id="serviceItem" required>
+                            <option value="Óleo do Motor">Óleo do Motor (Yamalube)</option>
                             <option value="Filtro de Ar">Filtro de Ar</option>
                             <option value="Vela de Ignição">Vela de Ignição</option>
-                            <option value="Kit Relação">Kit Relação (Corrente/Coroa/Pinhão)</option>
-                            <option value="Pneus">Pneus</option>
-                            <option value="Freios">Pastilhas / Sapatas de Freio</option>
+                            <option value="Kit Relação">Kit Relação</option>
+                            <option value="Pneu Traseiro">Pneu Traseiro</option>
                             <option value="Fluido de Freio">Fluido de Freio</option>
-                            <option value="Revisão Geral">Revisão Geral Programada</option>
-                            <option value="Outros">Outros Reparos</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label>Descrição / Peça Utilizada *</label>
-                        <input type="text" id="serviceTitle" required placeholder="Ex: Yamalube 20W-50 + Anel O-ring">
-                    </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Valor Total (R$)</label>
-                            <input type="number" step="0.01" min="0" id="serviceCost" placeholder="0,00">
+                            <label>KM na Troca</label>
+                            <input type="number" id="serviceKm" required placeholder="25850">
                         </div>
                         <div class="form-group">
-                            <label>Local Realizado</label>
-                            <select id="serviceLocation">
-                                <option value="Oficina">Oficina Especializada</option>
-                                <option value="Concessionária">Concessionária Yamaha</option>
-                                <option value="Feito em Casa">Feito em Casa (DIY)</option>
-                            </select>
+                            <label>Data</label>
+                            <input type="date" id="serviceDate" required>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label>Observações</label>
-                        <textarea id="serviceNotes" rows="2" placeholder="Notas sobre a manutenção..."></textarea>
+                        <label>Valor (R$)</label>
+                        <input type="number" step="0.01" id="servicePrice" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Observação / Marca</label>
+                        <input type="text" id="serviceNotes" placeholder="Ex: Yamalube 20W50">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="closeServiceModal()" class="btn btn-outline">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar Serviço</button>
+                    <button type="submit" class="btn btn-primary">Salvar Troca</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal 2: Update Odometer -->
+    <!-- MODAL 3: ATUALIZAR HODÔMETRO -->
     <div id="odometerModal" class="modal-overlay">
-        <div class="modal-container" style="max-width: 320px;">
-            <div class="modal-header">
-                <h3>Atualizar Hodômetro</h3>
-                <button onclick="closeOdometerModal()" class="btn-icon" style="padding:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-            </div>
-            <form onsubmit="saveOdometer(event)">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>KM Atual da Moto</label>
-                        <input type="number" id="odometerInput" min="0" required style="font-size:1.2rem; font-weight:700; text-align:center; color:var(--accent-cyan);">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="closeOdometerModal()" class="btn btn-outline">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Atualizar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal 3: Settings & Backup -->
-    <div id="settingsModal" class="modal-overlay">
         <div class="modal-container">
             <div class="modal-header">
-                <h3>Configurações & Backup</h3>
-                <button onclick="closeSettingsModal()" class="btn-icon" style="padding:4px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                <h3>Atualizar Hodômetro da Moto</h3>
+                <button onclick="closeOdometerModal()" class="btn-icon">x</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Modelo / Nome da Moto</label>
-                    <div style="display:flex; gap:8px;">
-                        <input type="text" id="motoModelInput" placeholder="Ex: Yamaha Factor 150 2024">
-                        <button onclick="saveMotoModel()" class="btn btn-primary" style="white-space:nowrap;">Salvar</button>
-                    </div>
+                    <label>Quilometragem Atual (KM)</label>
+                    <input type="number" id="inputNewKm" placeholder="25850">
                 </div>
-
-                <hr style="border:none; border-top:1px solid var(--border-color); margin:10px 0;">
-
-                <div class="form-group">
-                    <label>Exportar / Importar Backup</label>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                        <button onclick="exportJSON()" class="btn btn-outline">Exportar JSON</button>
-                        <button onclick="exportCSV()" class="btn btn-outline">Exportar CSV</button>
-                    </div>
-                    <label style="margin-top:8px; cursor:pointer;" class="btn btn-outline">
-                        Importar Arquivo Backup (JSON)
-                        <input type="file" id="importFileInput" accept=".json" onchange="importJSON(event)" style="display:none;">
-                    </label>
-                </div>
-
-                <hr style="border:none; border-top:1px solid var(--border-color); margin:10px 0;">
-
-                <button onclick="confirmResetData()" class="btn btn-outline" style="color:var(--accent-red); border-color:rgba(239, 68, 68, 0.3);">
-                    Restaurar Dados Exemplo (Factor 150)
-                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeOdometerModal()" class="btn btn-outline">Cancelar</button>
+                <button type="button" onclick="saveNewOdometer()" class="btn btn-primary">Atualizar</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Component -->
-    <div id="toast" class="toast">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-green)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <span id="toastMessage">Operação salva com sucesso</span>
-    </div>
-
-    <!-- Application Script -->
     <script>
-        // Standard Maintenance Rules for Yamaha Factor 150
-        const DEFAULT_INTERVALS = {
-            "Óleo do Motor": { intervalKm: 3000, desc: "Yamalube 20W-50 / 10W-40 JASO MA2" },
-            "Filtro de Ar": { intervalKm: 10000, desc: "Troca do elemento filtrante" },
-            "Vela de Ignição": { intervalKm: 10000, desc: "Vela NGK CPR8EA-9" },
-            "Kit Relação": { intervalKm: 20000, desc: "Corrente, Coroa e Pinhão" },
-            "Pneus": { intervalKm: 12000, desc: "Inspecionar desgaste / TWI" },
-            "Freios": { intervalKm: 10000, desc: "Pastilha dianteira e sapata traseira" },
-            "Fluido de Freio": { intervalKm: 15000, desc: "Substituição DOT 4" },
-            "Revisão Geral": { intervalKm: 10000, desc: "Válvulas, lubrificação e reaperto" }
-        };
+        const CONSUMO_KML = 35;
 
-        // Initial Data for Factor 150
-        const INITIAL_STATE = {
-            motoModel: "Yamaha Factor 150 (2024)",
-            odometer: 11200,
-            intervals: { ...DEFAULT_INTERVALS },
-            services: [
-                { id: "srv_1", date: "2024-02-10", km: 1000, category: "Revisão Geral", title: "1ª Revisão de Concessionária Yamaha", cost: 120.00, location: "Concessionária", notes: "Troca de óleo inicial e checagem de folga de válvulas." },
-                { id: "srv_2", date: "2024-06-15", km: 5000, category: "Óleo do Motor", title: "Yamalube 20W-50 + O-Ring dreno", cost: 55.00, location: "Feito em Casa", notes: "Nível ajustado com 1 litro." },
-                { id: "srv_3", date: "2024-10-02", km: 8000, category: "Óleo do Motor", title: "Yamalube 20W-50", cost: 58.00, location: "Feito em Casa", notes: "Lubrificada e ajustada folga da corrente." },
-                { id: "srv_4", date: "2025-01-20", km: 11000, category: "Óleo do Motor", title: "Yamalube 20W-50", cost: 60.00, location: "Feito em Casa", notes: "Troca preventiva." },
-                { id: "srv_5", date: "2025-01-20", km: 11000, category: "Filtro de Ar", title: "Filtro de Ar Original Yamaha", cost: 65.00, location: "Oficina", notes: "Substituição do elemento filtrante." },
-                { id: "srv_6", date: "2025-01-20", km: 11000, category: "Vela de Ignição", title: "Vela NGK CPR8EA-9", cost: 40.00, location: "Oficina", notes: "Troca regular conforme manual." }
-            ]
-        };
+        const PARTS_CONFIG = [
+            { name: "Óleo do Motor", interval: 3000 },
+            { name: "Filtro de Ar", interval: 10000 },
+            { name: "Vela de Ignição", interval: 10000 },
+            { name: "Kit Relação", interval: 20000 },
+            { name: "Fluido de Freio", interval: 15000 },
+            { name: "Pneu Traseiro", interval: 12000 }
+        ];
 
-        let appState = { motoModel: "", odometer: 0, intervals: {}, services: [] };
+        let currentKm = parseInt(localStorage.getItem('moto_km')) || 25850;
+        let services = JSON.parse(localStorage.getItem('moto_logs')) || [];
+        // Removidos registros prévios do histórico de corridas e ganhos
+        let shifts = JSON.parse(localStorage.getItem('moto_shifts')) || [];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadState();
-            renderAll();
-        });
+        document.getElementById('shiftDate').valueAsDate = new Date();
+        document.getElementById('serviceDate').valueAsDate = new Date();
 
-        function loadState() {
-            const saved = localStorage.getItem("motolog_data_v2");
-            if (saved) {
-                try {
-                    appState = JSON.parse(saved);
-                    appState.intervals = { ...DEFAULT_INTERVALS, ...appState.intervals };
-                } catch(e) {
-                    appState = JSON.parse(JSON.stringify(INITIAL_STATE));
-                }
-            } else {
-                appState = JSON.parse(JSON.stringify(INITIAL_STATE));
-                saveState();
-            }
-        }
+        function renderMotoDashboard() {
+            document.getElementById('headerKmDisplay').innerText = `${currentKm.toLocaleString()} km`;
+            document.getElementById('dashOdometer').innerText = `${currentKm.toLocaleString()} km`;
 
-        function saveState() {
-            localStorage.setItem("motolog_data_v2", JSON.stringify(appState));
-        }
+            const totalSpent = services.reduce((acc, curr) => acc + (parseFloat(curr.price) || 0), 0);
+            document.getElementById('dashTotalSpent').innerText = `R$ ${totalSpent.toFixed(2)}`;
+            document.getElementById('dashServiceCount').innerText = `${services.length} Registros`;
 
-        function renderAll() {
-            document.getElementById("motoModelDisplay").innerText = appState.motoModel || "Minha Moto";
-            document.getElementById("headerKmDisplay").innerText = `${formatKm(appState.odometer)} km`;
-            document.getElementById("dashOdometer").innerText = `${formatKm(appState.odometer)} km`;
+            const grid = document.getElementById('componentsGrid');
+            grid.innerHTML = '';
+            let alertsCount = 0;
 
-            calculateMetrics();
-            renderComponentHealth();
-            renderRecentHistory();
-            renderHistoryTable();
-            renderScheduleGrid();
-        }
-
-        function calculateMetrics() {
-            const totalSpent = appState.services.reduce((acc, curr) => acc + (Number(curr.cost) || 0), 0);
-            document.getElementById("dashTotalSpent").innerText = formatCurrency(totalSpent);
-            document.getElementById("dashServiceCount").innerText = `${appState.services.length} Registro(s)`;
-
-            if (appState.services.length > 0) {
-                const dates = appState.services.map(s => new Date(s.date).getTime()).sort();
-                const minDate = new Date(dates[0]);
-                const maxDate = new Date();
-                const months = Math.max(1, (maxDate.getFullYear() - minDate.getFullYear()) * 12 + (maxDate.getMonth() - minDate.getMonth()));
-                document.getElementById("dashAvgCost").innerText = formatCurrency(totalSpent / months);
-            } else {
-                document.getElementById("dashAvgCost").innerText = "R$ 0,00";
-            }
-        }
-
-        function renderComponentHealth() {
-            const grid = document.getElementById("componentsGrid");
-            grid.innerHTML = "";
-
-            let urgentAlerts = [];
-            let alertCount = 0;
-
-            Object.keys(DEFAULT_INTERVALS).forEach(cat => {
-                const config = appState.intervals[cat] || DEFAULT_INTERVALS[cat];
-                const interval = config.intervalKm;
-
-                const catServices = appState.services.filter(s => s.category === cat).sort((a, b) => b.km - a.km);
-                const lastService = catServices.length > 0 ? catServices[0] : null;
+            PARTS_CONFIG.forEach(part => {
+                const lastService = services.filter(s => s.item === part.name).sort((a,b) => b.km - a.km)[0];
                 const lastKm = lastService ? lastService.km : 0;
-                
-                const kmDriven = Math.max(0, appState.odometer - lastKm);
-                const kmRemaining = interval - kmDriven;
-                let usedPercent = Math.min(100, Math.max(0, Math.round((kmDriven / interval) * 100)));
+                const kmDriven = currentKm - lastKm;
+                const pct = Math.min(Math.round((kmDriven / part.interval) * 100), 100);
 
-                let badgeClass = "badge-green";
-                let progressClass = "bg-green";
-                let badgeText = "Em dia";
+                let color = 'bg-green';
+                let statusText = `${(part.interval - kmDriven).toLocaleString()} km restantes`;
 
-                if (kmRemaining <= 0) {
-                    badgeClass = "badge-red";
-                    progressClass = "bg-red";
-                    badgeText = "Vencido";
-                    urgentAlerts.push(`<strong>${cat}</strong> precisa ser trocado/revisado (excedido ${Math.abs(kmRemaining)} km)`);
-                    alertCount++;
-                } else if (kmRemaining <= 500) {
-                    badgeClass = "badge-amber";
-                    progressClass = "bg-amber";
-                    badgeText = "Atenção";
-                    urgentAlerts.push(`<strong>${cat}</strong> próximo do vencimento (faltam ${kmRemaining} km)`);
-                    alertCount++;
+                if (pct >= 100) {
+                    color = 'bg-red';
+                    statusText = `Vencido há ${(kmDriven - part.interval).toLocaleString()} km!`;
+                    alertsCount++;
+                } else if (pct >= 80) {
+                    color = 'bg-amber';
+                    statusText = `Trocar em breve (${(part.interval - kmDriven).toLocaleString()} km)`;
+                    alertsCount++;
                 }
 
                 grid.innerHTML += `
                     <div class="component-card">
-                        <div>
-                            <div class="component-head">
-                                <div class="component-meta">
-                                    <div class="component-icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                                    </div>
-                                    <div>
-                                        <h4>${cat}</h4>
-                                        <p>A cada ${formatKm(interval)} km</p>
-                                    </div>
-                                </div>
-                                <span class="badge ${badgeClass}">${badgeText}</span>
-                            </div>
-
-                            <div style="margin-top:10px;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.75rem;">
-                                    <span style="color:var(--text-secondary);">${kmRemaining > 0 ? `Restam ${formatKm(kmRemaining)} km` : `Vencido há ${formatKm(Math.abs(kmRemaining))} km`}</span>
-                                    <span style="font-weight:700;">${usedPercent}% usado</span>
-                                </div>
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar-fill ${progressClass}" style="width:${usedPercent}%"></div>
+                        <div class="component-head">
+                            <div class="component-meta">
+                                <div class="component-icon">⚙️</div>
+                                <div>
+                                    <h4>${part.name}</h4>
+                                    <p>Última troca: ${lastKm.toLocaleString()} km</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="component-footer">
-                            <span>Última: ${lastService ? `${formatKm(lastService.km)} km (${formatDate(lastService.date)})` : 'Sem registros'}</span>
-                            <button onclick="openServiceModalWithCategory('${cat}')" style="background:none; border:none; color:var(--accent-cyan); font-weight:700; cursor:pointer;">+ Trocar</button>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill ${color}" style="width: ${pct}%"></div>
                         </div>
+                        <p style="font-size:0.75rem; margin-top:6px; color:var(--text-secondary); text-align:right;">${statusText}</p>
                     </div>
                 `;
             });
 
-            document.getElementById("dashAlertsCount").innerText = alertCount;
-            const alertsBox = document.getElementById("urgentAlertsBox");
-            const alertsList = document.getElementById("urgentAlertsList");
+            document.getElementById('dashAlertsCount').innerText = alertsCount;
 
-            if (urgentAlerts.length > 0) {
-                alertsBox.classList.remove("hidden");
-                alertsList.innerHTML = urgentAlerts.map(a => `<li>• ${a}</li>`).join("");
-            } else {
-                alertsBox.classList.add("hidden");
-            }
+            localStorage.setItem('moto_km', currentKm);
+            localStorage.setItem('moto_logs', JSON.stringify(services));
         }
 
-        function renderRecentHistory() {
-            const container = document.getElementById("dashRecentHistory");
-            const recent = [...appState.services].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+        // Função para atualizar dinamicamente as opções do filtro de meses
+        function updateMonthFilterOptions(selectedKey) {
+            const select = document.getElementById('filterMonthSelect');
+            const monthsSet = new Set();
 
-            if (recent.length === 0) {
-                container.innerHTML = `<div class="empty-state" style="padding:20px;">Sem serviços recentes.</div>`;
-                return;
+            // Adiciona meses dos registros salvos
+            shifts.forEach(s => {
+                if (s.date && s.date.length >= 7) {
+                    monthsSet.add(s.date.substring(0, 7));
+                }
+            });
+
+            // Adiciona mês atual e os 12 meses futuros para planejamento
+            const now = new Date();
+            for (let i = 0; i <= 12; i++) {
+                const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                monthsSet.add(`${year}-${month}`);
             }
 
-            container.innerHTML = recent.map(srv => `
-                <div class="history-item">
-                    <div class="history-main">
-                        <div class="history-info">
-                            <h4>${escapeHtml(srv.title)}</h4>
-                            <div class="history-meta">
-                                <span>${formatDate(srv.date)}</span>
-                                <span>•</span>
-                                <span>${formatKm(srv.km)} km</span>
-                                <span>•</span>
-                                <span>${srv.location}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="history-cost">${formatCurrency(srv.cost)}</div>
-                </div>
-            `).join("");
+            // Ordena os meses em ordem decrescente (mais recente primeiro)
+            const sortedMonths = Array.from(monthsSet).sort().reverse();
+
+            const monthNames = [
+                'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+            ];
+
+            const currentVal = selectedKey || select.value || `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+            select.innerHTML = '';
+            sortedMonths.forEach(m => {
+                const [y, mon] = m.split('-');
+                const label = `${monthNames[parseInt(mon, 10) - 1]} ${y}`;
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.innerText = label;
+                if (m === currentVal) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderEarningsDashboard() {
+            const select = document.getElementById('filterMonthSelect');
+            let selectedMonth = select.value;
+
+            // Se ainda não existirem opções no filtro, inicializa as opções com o mês atual
+            if (!select.options.length) {
+                const now = new Date();
+                selectedMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+                updateMonthFilterOptions(selectedMonth);
+            } else {
+                updateMonthFilterOptions(selectedMonth);
+            }
+
+            selectedMonth = select.value;
+            const filteredShifts = shifts.filter(s => s.date.startsWith(selectedMonth));
+
+            let totalGross = 0, totalNet = 0, totalKM = 0, totalMinutes = 0, totalFuel = 0;
+            const tbody = document.getElementById('shiftsTableBody');
+            tbody.innerHTML = '';
+
+            filteredShifts.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(s => {
+                const kmTotal = s.kmFinal - s.kmInit;
+                const fuelCost = (kmTotal / CONSUMO_KML) * s.gasPrice;
+                const totalDeductions = fuelCost + parseFloat(s.maint||0) + parseFloat(s.vacation||0) + parseFloat(s.invest||0);
+                const net = s.gross - totalDeductions;
+
+                const [h1, m1] = s.start.split(':').map(Number);
+                const [h2, m2] = s.end.split(':').map(Number);
+                let mins = (h2 * 60 + m2) - (h1 * 60 + m1);
+                if (mins < 0) mins += 24 * 60;
+
+                totalGross += parseFloat(s.gross);
+                totalNet += net;
+                totalKM += kmTotal;
+                totalFuel += fuelCost;
+                totalMinutes += mins;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${s.date.split('-').reverse().join('/')}</td>
+                        <td>${s.start} - ${s.end}</td>
+                        <td>${kmTotal} km</td>
+                        <td style="color:var(--accent-green); font-weight:bold;">R$ ${parseFloat(s.gross).toFixed(2)}</td>
+                        <td style="color:var(--accent-red)">-R$ ${fuelCost.toFixed(2)}</td>
+                        <td>-R$ ${(parseFloat(s.maint||0) + parseFloat(s.vacation||0) + parseFloat(s.invest||0)).toFixed(2)}</td>
+                        <td style="font-weight:bold; color:var(--accent-cyan);">R$ ${net.toFixed(2)}</td>
+                        <td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteShift(${s.id})">x</button></td>
+                    </tr>
+                `;
+            });
+
+            const totalHoursDecimal = totalMinutes / 60;
+            const rPerHour = totalHoursDecimal > 0 ? (totalGross / totalHoursDecimal) : 0;
+            const rPerKm = totalKM > 0 ? (totalGross / totalKM) : 0;
+
+            document.getElementById('earnGrossVal').innerText = `R$ ${totalGross.toFixed(2)}`;
+            document.getElementById('earnNetVal').innerText = `R$ ${totalNet.toFixed(2)}`;
+            document.getElementById('earnPerHourVal').innerText = `R$ ${rPerHour.toFixed(2)}`;
+            document.getElementById('earnPerKmVal').innerText = `R$ ${rPerKm.toFixed(2)}`;
+            document.getElementById('earnKmTotal').innerText = `${totalKM} km`;
+            document.getElementById('earnHoursTotal').innerText = `${Math.floor(totalMinutes/60)}h ${totalMinutes%60}m`;
+            document.getElementById('earnFuelTotal').innerText = `-R$ ${totalFuel.toFixed(2)}`;
+
+            localStorage.setItem('moto_shifts', JSON.stringify(shifts));
         }
 
         function renderHistoryTable() {
-            const container = document.getElementById("historyListContainer");
-            const emptyState = document.getElementById("historyEmptyState");
-
-            const query = document.getElementById("historySearchInput").value.toLowerCase();
-            const categoryFilter = document.getElementById("historyCategoryFilter").value;
-
-            let filtered = appState.services.filter(srv => {
-                const matchesQuery = srv.title.toLowerCase().includes(query) || (srv.notes && srv.notes.toLowerCase().includes(query));
-                const matchesCat = categoryFilter === "ALL" || srv.category === categoryFilter;
-                return matchesQuery && matchesCat;
-            }).sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            if (filtered.length === 0) {
-                container.innerHTML = "";
-                emptyState.classList.remove("hidden");
-                return;
-            }
-
-            emptyState.classList.add("hidden");
-            container.innerHTML = filtered.map(srv => `
-                <div class="history-item">
-                    <div class="history-main">
-                        <div class="history-info">
-                            <div style="display:flex; gap:6px; align-items:center; margin-bottom:2px;">
-                                <span class="badge" style="background-color:rgba(6,182,212,0.1); color:var(--accent-cyan); border-color:rgba(6,182,212,0.2);">${srv.category}</span>
-                            </div>
-                            <h4>${escapeHtml(srv.title)}</h4>
-                            <div class="history-meta">
-                                <span>Data: ${formatDate(srv.date)}</span>
-                                <span>•</span>
-                                <span>KM: ${formatKm(srv.km)} km</span>
-                                <span>•</span>
-                                <span>Local: ${srv.location}</span>
-                            </div>
-                            ${srv.notes ? `<div class="history-notes">${escapeHtml(srv.notes)}</div>` : ''}
-                        </div>
-                    </div>
-                    <div class="history-right">
-                        <div class="history-cost">${formatCurrency(srv.cost)}</div>
-                        <div style="display:flex; gap:4px;">
-                            <button onclick="editService('${srv.id}')" class="btn-icon" style="padding:4px;" title="Editar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-                            <button onclick="deleteService('${srv.id}')" class="btn-icon" style="padding:4px; color:var(--accent-red);" title="Excluir"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="3 6h18"/><path d="19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                        </div>
-                    </div>
-                </div>
-            `).join("");
-        }
-
-        function renderScheduleGrid() {
-            const container = document.getElementById("scheduleGrid");
-            container.innerHTML = "";
-
-            Object.keys(DEFAULT_INTERVALS).forEach(cat => {
-                const config = appState.intervals[cat] || DEFAULT_INTERVALS[cat];
+            const container = document.getElementById('historyListContainer');
+            container.innerHTML = '';
+            services.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(s => {
                 container.innerHTML += `
-                    <div class="component-card">
+                    <div class="history-item">
                         <div>
-                            <h4>${cat}</h4>
-                            <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:10px;">${config.desc}</p>
-                            <div style="display:flex; items-center; gap:8px;">
-                                <input type="number" step="500" value="${config.intervalKm}" onchange="updateCategoryInterval('${cat}', this.value)" style="text-align:center; font-weight:700; color:var(--accent-cyan);">
-                                <span style="font-size:0.8rem; align-self:center; color:var(--text-secondary);">km</span>
-                            </div>
+                            <h4>${s.item}</h4>
+                            <p style="font-size:0.75rem; color:var(--text-secondary);">${s.km.toLocaleString()} km • ${s.date} ${s.notes ? '• ' + s.notes : ''}</p>
                         </div>
+                        <div style="font-weight:bold; color:var(--accent-green);">R$ ${parseFloat(s.price||0).toFixed(2)}</div>
                     </div>
                 `;
             });
         }
 
-        // Tab Navigation Logic
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.mobile-tab').forEach(btn => btn.classList.remove('active'));
+        function saveShift(e) {
+            e.preventDefault();
+            const kmInit = parseInt(document.getElementById('shiftKmInit').value);
+            const kmFinal = parseInt(document.getElementById('shiftKmFinal').value);
 
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            if (kmFinal < kmInit) {
+                alert("A KM Final não pode ser menor que a KM Inicial!");
+                return;
+            }
 
-            const dtBtn = document.getElementById(`dt-tab-${tabId}`);
-            if (dtBtn) dtBtn.classList.add('active');
+            const newShift = {
+                id: Date.now(),
+                date: document.getElementById('shiftDate').value,
+                gross: parseFloat(document.getElementById('shiftGross').value),
+                start: document.getElementById('shiftStart').value,
+                end: document.getElementById('shiftEnd').value,
+                kmInit: kmInit,
+                kmFinal: kmFinal,
+                gasPrice: parseFloat(document.getElementById('shiftGasPrice').value) || 5.19,
+                maint: parseFloat(document.getElementById('shiftMaint').value) || 0,
+                vacation: parseFloat(document.getElementById('shiftVacation').value) || 0,
+                invest: parseFloat(document.getElementById('shiftInvest').value) || 0
+            };
 
-            const mbBtn = document.getElementById(`mb-tab-${tabId}`);
-            if (mbBtn) mbBtn.classList.add('active');
+            if (kmFinal > currentKm) currentKm = kmFinal;
+
+            shifts.push(newShift);
+            closeShiftModal();
+            renderMotoDashboard();
+            
+            // Garante que o filtro exiba o mês do lançamento recém-salvo
+            const newShiftMonth = newShift.date.substring(0, 7);
+            updateMonthFilterOptions(newShiftMonth);
+            renderEarningsDashboard();
+            switchTab('earnings');
         }
 
-        // Modals Operations
-        function openServiceModal() {
-            document.getElementById("serviceForm").reset();
-            document.getElementById("serviceId").value = "";
-            document.getElementById("serviceModalTitle").innerText = "Registrar Novo Serviço";
-            document.getElementById("serviceDate").valueAsDate = new Date();
-            document.getElementById("serviceKm").value = appState.odometer || "";
-            document.getElementById("serviceModal").classList.add("active");
-        }
-
-        function openServiceModalWithCategory(cat) {
-            openServiceModal();
-            document.getElementById("serviceCategory").value = cat;
-            document.getElementById("serviceTitle").value = `Troca / Serviço de ${cat}`;
-        }
-
-        function closeServiceModal() {
-            document.getElementById("serviceModal").classList.remove("active");
-        }
-
-        function openOdometerModal() {
-            document.getElementById("odometerInput").value = appState.odometer;
-            document.getElementById("odometerModal").classList.add("active");
-        }
-
-        function closeOdometerModal() {
-            document.getElementById("odometerModal").classList.remove("active");
-        }
-
-        function openSettingsModal() {
-            document.getElementById("motoModelInput").value = appState.motoModel;
-            document.getElementById("settingsModal").classList.add("active");
-        }
-
-        function closeSettingsModal() {
-            document.getElementById("settingsModal").classList.remove("active");
-        }
-
-        // CRUD & State Handlers
         function saveService(e) {
             e.preventDefault();
-            const id = document.getElementById("serviceId").value || "srv_" + Date.now();
-            const date = document.getElementById("serviceDate").value;
-            const km = parseInt(document.getElementById("serviceKm").value);
-            const category = document.getElementById("serviceCategory").value;
-            const title = document.getElementById("serviceTitle").value;
-            const cost = parseFloat(document.getElementById("serviceCost").value) || 0;
-            const location = document.getElementById("serviceLocation").value;
-            const notes = document.getElementById("serviceNotes").value;
-
-            const serviceObj = { id, date, km, category, title, cost, location, notes };
-
-            const index = appState.services.findIndex(s => s.id === id);
-            if (index >= 0) {
-                appState.services[index] = serviceObj;
-            } else {
-                appState.services.push(serviceObj);
-            }
-
-            if (km > appState.odometer) {
-                appState.odometer = km;
-            }
-
-            saveState();
-            renderAll();
-            closeServiceModal();
-            showToast("Serviço registrado com sucesso!");
-        }
-
-        function editService(id) {
-            const srv = appState.services.find(s => s.id === id);
-            if (!srv) return;
-
-            document.getElementById("serviceId").value = srv.id;
-            document.getElementById("serviceDate").value = srv.date;
-            document.getElementById("serviceKm").value = srv.km;
-            document.getElementById("serviceCategory").value = srv.category;
-            document.getElementById("serviceTitle").value = srv.title;
-            document.getElementById("serviceCost").value = srv.cost || "";
-            document.getElementById("serviceLocation").value = srv.location;
-            document.getElementById("serviceNotes").value = srv.notes || "";
-
-            document.getElementById("serviceModalTitle").innerText = "Editar Serviço";
-            document.getElementById("serviceModal").classList.add("active");
-        }
-
-        function deleteService(id) {
-            if (confirm("Deseja realmente remover este registro de manutenção?")) {
-                appState.services = appState.services.filter(s => s.id !== id);
-                saveState();
-                renderAll();
-                showToast("Registro excluído.");
-            }
-        }
-
-        function saveOdometer(e) {
-            e.preventDefault();
-            const km = parseInt(document.getElementById("odometerInput").value);
-            if (!isNaN(km) && km >= 0) {
-                appState.odometer = km;
-                saveState();
-                renderAll();
-                closeOdometerModal();
-                showToast("Hodômetro atualizado!");
-            }
-        }
-
-        function saveMotoModel() {
-            const val = document.getElementById("motoModelInput").value.trim();
-            if (val) {
-                appState.motoModel = val;
-                saveState();
-                renderAll();
-                showToast("Nome da moto salvo!");
-            }
-        }
-
-        function updateCategoryInterval(cat, km) {
-            const val = parseInt(km);
-            if (val > 0) {
-                appState.intervals[cat].intervalKm = val;
-                saveState();
-                renderAll();
-                showToast(`Intervalo de ${cat} atualizado!`);
-            }
-        }
-
-        function resetCategoryIntervals() {
-            if (confirm("Restaurar os intervalos de fábrica recomendados para a Factor 150?")) {
-                appState.intervals = JSON.parse(JSON.stringify(DEFAULT_INTERVALS));
-                saveState();
-                renderAll();
-                showToast("Intervalos restaurados!");
-            }
-        }
-
-        // Backup Actions
-        function exportJSON() {
-            const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `motolog_factor150_backup.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function exportCSV() {
-            if (appState.services.length === 0) return alert("Sem registros para exportar.");
-            let csv = "ID,Data,KM,Categoria,Titulo,Valor,Local,Observacoes\n";
-            appState.services.forEach(s => {
-                csv += `${s.id},${s.date},${s.km},"${s.category}","${s.title.replace(/"/g, '""')}",${s.cost || 0},"${s.location}","${(s.notes||'').replace(/"/g, '""')}"\n`;
-            });
-            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `motolog_factor150_historico.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function importJSON(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const imported = JSON.parse(evt.target.result);
-                    if (imported && imported.services) {
-                        appState = imported;
-                        saveState();
-                        renderAll();
-                        closeSettingsModal();
-                        showToast("Dados importados com sucesso!");
-                    }
-                } catch(err) {
-                    alert("Arquivo de backup inválido.");
-                }
+            const newService = {
+                id: Date.now(),
+                item: document.getElementById('serviceItem').value,
+                km: parseInt(document.getElementById('serviceKm').value),
+                date: document.getElementById('serviceDate').value,
+                price: parseFloat(document.getElementById('servicePrice').value) || 0,
+                notes: document.getElementById('serviceNotes').value
             };
-            reader.readAsText(file);
+
+            if (newService.km > currentKm) currentKm = newService.km;
+
+            services.push(newService);
+            closeServiceModal();
+            renderMotoDashboard();
+            renderHistoryTable();
         }
 
-        function confirmResetData() {
-            if (confirm("Deseja restaurar para os dados demonstrativos de exemplo da Factor 150?")) {
-                appState = JSON.parse(JSON.stringify(INITIAL_STATE));
-                saveState();
-                renderAll();
-                closeSettingsModal();
-                showToast("Dados de exemplo carregados.");
+        function deleteShift(id) {
+            if (confirm("Excluir este dia de trabalho?")) {
+                shifts = shifts.filter(s => s.id !== id);
+                renderEarningsDashboard();
             }
         }
 
-        // Formatters
-        function formatKm(v) { return (v || 0).toLocaleString('pt-BR'); }
-        function formatCurrency(v) { return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-        function formatDate(d) { if (!d) return ''; const [y,m,day] = d.split('-'); return `${day}/${m}/${y}`; }
-        function escapeHtml(s) { return (s || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+        function switchTab(tab) {
+            ['dashboard', 'earnings', 'history'].forEach(t => {
+                const sec = document.getElementById(`tab-${t}`);
+                if (sec) sec.classList.remove('active');
+                const dtBtn = document.getElementById(`dt-tab-${t}`);
+                if (dtBtn) dtBtn.classList.remove('active');
+                const mbBtn = document.getElementById(`mb-tab-${t}`);
+                if (mbBtn) mbBtn.classList.remove('active');
+            });
 
-        function showToast(msg) {
-            const toast = document.getElementById("toast");
-            document.getElementById("toastMessage").innerText = msg;
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 3000);
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            const activeDt = document.getElementById(`dt-tab-${tab}`);
+            if (activeDt) activeDt.classList.add('active');
+            const activeMb = document.getElementById(`mb-tab-${tab}`);
+            if (activeMb) activeMb.classList.add('active');
+
+            if (tab === 'earnings') renderEarningsDashboard();
+            if (tab === 'history') renderHistoryTable();
         }
+
+        function openShiftModal() { document.getElementById('shiftModal').classList.add('active'); }
+        function closeShiftModal() { document.getElementById('shiftModal').classList.remove('active'); }
+        function openServiceModal() { document.getElementById('serviceModal').classList.add('active'); }
+        function closeServiceModal() { document.getElementById('serviceModal').classList.remove('active'); }
+        function openOdometerModal() { 
+            document.getElementById('inputNewKm').value = currentKm;
+            document.getElementById('odometerModal').classList.add('active'); 
+        }
+        function closeOdometerModal() { document.getElementById('odometerModal').classList.remove('active'); }
+        function saveNewOdometer() {
+            const val = parseInt(document.getElementById('inputNewKm').value);
+            if (val) {
+                currentKm = val;
+                renderMotoDashboard();
+                closeOdometerModal();
+            }
+        }
+
+        renderMotoDashboard();
+        renderEarningsDashboard();
     </script>
 </body>
 </html>
